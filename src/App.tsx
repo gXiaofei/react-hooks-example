@@ -7,6 +7,7 @@ import useUnmount from './hooks/useUnmount';
 import useUnmountedRef from './hooks/useUnmountedRef';
 import useUpdate from './hooks/useUpdate';
 import useCreation from './hooks/useCreation';
+import useHover from './hooks/useHover';
 
 
 const Child = () => {
@@ -36,6 +37,8 @@ function App() {
 
   const update = useUpdate();
 
+  const isHover = useHover(document.getElementById('toggle'))
+
   const getNowData = () => {
     return Math.random();
   };
@@ -43,6 +46,7 @@ function App() {
   const nowData = useCreation(() => getNowData(), []);
 
   const ref = useLatest(count);
+  
 
   // useEffect(() => {
   //   const interval = setInterval(() => {
@@ -57,7 +61,10 @@ function App() {
     <div className="App">
       <div>自定义Hooks：useLatestt</div>
       <div>count: {count}</div>
-      <Button onClick={() => setFlag(!flag)}>切换</Button>
+      <Button id='toggle' onClick={() => setFlag(!flag)}>切换</Button>
+      {
+        isHover ? 'hover' : 'not hover'
+      }
       {flag && <Child />}
       <p></p>
       <Button onClick={() => update()}>更新</Button>
