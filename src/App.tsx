@@ -6,6 +6,7 @@ import useMount from './hooks/useMount';
 import useUnmount from './hooks/useUnmount';
 import useUnmountedRef from './hooks/useUnmountedRef';
 import useUpdate from './hooks/useUpdate';
+import useCreation from './hooks/useCreation';
 
 
 const Child = () => {
@@ -35,6 +36,11 @@ function App() {
 
   const update = useUpdate();
 
+  const getNowData = () => {
+    return Math.random();
+  };
+
+  const nowData = useCreation(() => getNowData(), []);
 
   const ref = useLatest(count);
 
@@ -56,6 +62,17 @@ function App() {
       <p></p>
       <Button onClick={() => update()}>更新</Button>
       <div>{Date.now()}</div>
+
+      <div>正常的函数： {getNowData()}</div>
+      <div>useCreation包裹后的： {nowData}</div>
+      <Button
+        type="primary"
+        onClick={() => {
+          setFlag((v) => !v);
+        }}
+      >
+        切换状态{JSON.stringify(flag)}
+      </Button>
     </div>
   );
 }
