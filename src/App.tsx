@@ -8,6 +8,8 @@ import useUnmountedRef from './hooks/useUnmountedRef';
 import useUpdate from './hooks/useUpdate';
 import useCreation from './hooks/useCreation';
 import useHover from './hooks/useHover';
+import useNetWork from './hooks/useNetWork';
+import useCss from './hooks/useCss';
 
 
 const Child = () => {
@@ -48,6 +50,26 @@ function App() {
   const ref = useLatest(count);
   
 
+  const net = useNetWork();
+
+  console.log('net', net);
+
+  const classDiv = useCss({
+    color: "red",
+    "&:hover": {
+      color: "blue",
+    },
+  });
+
+  const classP = useCss({
+    p: {
+      color: "green",
+      "&:nth-of-type(2)": {
+        color: "rebeccapurple",
+      },
+    },
+  });
+
   // useEffect(() => {
   //   const interval = setInterval(() => {
   //     console.log("count:", count);
@@ -80,6 +102,15 @@ function App() {
       >
         切换状态{JSON.stringify(flag)}
       </Button>
+
+      <div className={classDiv}>
+        鼠标放上来
+      </div>
+      <div className={classP}>
+        <p>CSS-in-JS</p>
+        <p>控制div下p标签的字体颜色</p>
+        <p style={{ color: "pink" }}>我是行内样式</p>
+      </div>
     </div>
   );
 }
